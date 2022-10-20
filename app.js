@@ -11,7 +11,7 @@ const sequelize = require('./util/database')
 const cors = require('cors')
 
 const authRoutes = require('./routes/auth')
-
+const User = require('./model/user')
 
 const app = express();
 
@@ -22,6 +22,7 @@ app.use(cors());
 
 
 app.use('/user', authRoutes);
+
 
 
 sequelize
