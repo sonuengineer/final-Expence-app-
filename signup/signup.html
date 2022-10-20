@@ -1,41 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SignUp</title>
-    <link rel="stylesheet" href="./signup.css">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./signup.css" />
+    <title>Sign Up</title>
 </head>
+
 <body>
-    <div class="signup">
-        <div class="form">
-            <form >
-    
-                   <p>Expense book</p>
-         
-                <div class="w-100">
-                    <div class="input-label-div w-100">
-                        <input type="text" name="name" class="inp " required="" placeholder=" " autocomplete="off" value="">
-                        <label class="inp-label" name="name">Name</label>
-                    </div>
-                    <div class="input-label-div w-100">
-                        <input type="email" name="email" class="inp " required="" placeholder=" " autocomplete="off" value="">
-                        <label class="inp-label" name="email">Email</label>
-                    </div>
-                    <div class="input-label-div w-100">
-                        <input type="text" name="phone" class="inp " required="" placeholder=" " autocomplete="off" value="">
-                        <label class="inp-label" name="phone">Mobile no.</label>
-                    </div>
-                    <div class="input-label-div undefined">
-                        <input type="password" name="password" class="inp " required="" placeholder=" " autocomplete="off" value="">
-                        <label class="inp-label" name="password">Password</label>
-                    </div>
-                    <button type="submit">Register</button>
-                    <p>Already a user?<a href="">Login</a></p>
-                </div>
-            </form>
-        </div>
+    <header>
+        <h1>Expense Tracker</h1>
+    </header>
+    <div id="mainContainer">
+        <h2>Sign Up</h2>
+        <form id="register">
+            <table>
+                <tr>
+                    <td>
+                        <label for="name">Name:</label>
+                    </td>
+
+                    <td>
+                        <input type="text" id="name" name="name" required />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="email">Email Address:</label>
+                    </td>
+
+                    <td>
+                        <input type="email" id="email" name="email" required />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="password">Password:</label>
+                    </td>
+
+                    <td>
+                        <input type="password" id="password" name="password" required />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="phone">Contact No:</label>
+                    </td>
+
+                    <td>
+                        <input type="tel" id="phone" name="phone" required />
+                    </td>
+                </tr>
+            </table>
+            <button type="submit" class="btn">SignUp</button>
+            <hr />
+            <a href="">Already a user? Login Here</a>
+        </form>
     </div>
-    
+
+    <!-- Toggle notification -->
+    <div id="container"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"></script>
+    <script src="./signup.js"></script>
+</body>
+
 </html>
