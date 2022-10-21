@@ -1,6 +1,5 @@
 const User = require("../model/user");
-const bcrypt = require('bcrypt');
-const jwt = require("jsonwebtoken");
+
 exports.register = (req, res, next) => {
     const { name, email, password, phone } = req.body;
 
@@ -44,58 +43,30 @@ exports.login = async (req, res, next) => {
                 .status(404)
                 .json({ success: false, message: "user does not exist" });
 
-        const passMatch = await bcrypt.compare(req.body.password, user.password);
-        if (!passMatch)
+        var a = user.password
+        var b = req.body.password
+    
+        const passMatch=(a==b)?true:false
+      
+      
+        if (passMatch == false)
             return res
                 .status(401)
                 .json({ success: false, message: "Incorrect Password" });
 
+
        
-                const token = jwt.sign({ id: user.id }, `${process.env.TOKEN_SECRET}`);
-                return res.json({
-                    token: token,
-                    isPremium: user.isPremium,
-                    email: user.email,
-                    success: true,
-                    message: "successfully logged in",
-                });
+        return res.json({
+           
+            email: user.email,
+            success: true,
+            message: "successfully logged in",
+        });
     } catch (err) {
         res.json(err);
         console.log(err);
     }
 };
 
-// exports.login= (req,res,next)=>{
-//     const { email, password} = req.body;
-//     console.log(req.body);
-//     User.findAll({where:{email}})
-//     .then(user=>{
-//         if(user.length > 0){
-//             bcrypt.compare(password, user[0].password, function(err, response) {
-//                 if (err){
-//                 console.log(err)
-//                 return res.json({message:"somthing went wrong with password", success:false})
-//                 }
-//                 if(response){
-//                     console.log(response, 'is true')
-//                     const jwtToken = generateToken(user[0].id)
-//                     console.log(jwtToken)
-//                     return res.json({token:jwtToken,message:"Signed-In Successfully", success:true})
-//                 }else{
-//                     return res.status(401).json({message:"something went wrong", success:false})
-//                 }
-//             })
-//         }
-//         else {
-//             return res.status(404).json({success: false, message: 'passwords do not match'})
-//         }
-//     })
-//     .catch(err=>{
-//         console.log(err)
-//         res.status(404).json({success: false, message: 'passwords do not match please enter write password'})
-//     })
-// }
 
-// function generateToken(id){
-//     return jwt.sign(id, process.env.TOKEN_SECRET)
-// }
+
