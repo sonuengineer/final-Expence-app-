@@ -1,9 +1,9 @@
-const User = require("../model/user");
+const User = require("../models/user");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
 exports.register = (req, res, next) => {
     const { name, email, password, phone } = req.body;
-
-
 
     bcrypt.hash(password, 10, (err, hash) => {
         User.findAll({ where: { email: email } }).then((users) => {
@@ -18,9 +18,8 @@ exports.register = (req, res, next) => {
                     name: name,
                     email: email,
                     password: hash,
-                    //password: password,
                     phone: phone,
-    
+                    isPremium: false,
                 })
                     .then(() => {
                         res.status(200).json({
@@ -34,12 +33,8 @@ exports.register = (req, res, next) => {
                     });
             }
         });
-
     });
-    
-
 };
-
 
 exports.login = async (req, res, next) => {
     try {
@@ -49,20 +44,16 @@ exports.login = async (req, res, next) => {
                 .status(404)
                 .json({ success: false, message: "user does not exist" });
 
-        //var a = user.password
-        //var b = req.body.password
-      
-        //const passMatch=(a==b)?true:false
         const passMatch = await bcrypt.compare(req.body.password, user.password);
         if (!passMatch)
             return res
                 .status(401)
                 .json({ success: false, message: "Incorrect Password" });
 
-
-       
+        const token = jwt.sign({ id: user.id }, `${process.env.TOKEN_SECRET}`);
         return res.json({
-           
+            token: token,
+            isPremium: user.isPremium,
             email: user.email,
             success: true,
             message: "successfully logged in",
@@ -72,6 +63,3 @@ exports.login = async (req, res, next) => {
         console.log(err);
     }
 };
-
-
-
