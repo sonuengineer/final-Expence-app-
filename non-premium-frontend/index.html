@@ -37,30 +37,35 @@
       </select>
       <br>
       <input type="submit" value="Add Expense">
-      <hr>
-      <input type="submit" id="getExpense" value="Get Expenses">
-    </div>
-    <div id="notificationContainer">
-      <!-- notification container -->
-    </div>
-  
-  
-  
-    <div id="displayContainer">
-    </div>
-  
     </form>
+    <hr>
+    <input type="submit" id="getExpense" value="Get Expenses">
+  </div>
+  <div id="notificationContainer">
+    <!-- notification container -->
+  </div>
+
   
+  <div id="displayContainer">
+  </div>
+
   <section id="pagination" class="pagination">
   </section>
 
-  <br>
-  
   <button id="logout" class="btn">Logout</button>
 
-  
+  <input type="submit" id="premium" value="Buy Premium">
+  <div class="popup-container" id="popup-container">
+    <div class="popup">
+      <button id="close">&times;</button>
+      <h1>Expense Tracker Premium</h1>
+      <p>Buy at INR 499 only</p>
+      <input type="submit" id="pay" value="Pay Now" style="display: fixed;">
+    </div>
+  </div>
 
-  
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
   <script src="./index.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"></script>
 </body>

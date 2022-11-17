@@ -1,19 +1,6 @@
-#expense{
-  text-align: center;
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
+body{
+  align-items:center ;
 }
-h1{
-  text-align: center;
-}
-
-
-
 input[type=text],
 select {
   width: 50%;
@@ -23,6 +10,7 @@ select {
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+  align-content:center ;
 }
 
 input[type=number],
@@ -33,12 +21,12 @@ select {
   display: inline-block;
   border: 1px solid #ccc;
   border-radius: 4px;
-  box-sizing: border-box;get
+  box-sizing: border-box;
 }
 
 input[type=submit] {
   width: 50%;
-  background-color: #4645a0;
+  background-color: blue;
   color: white;
   padding: 14px 20px;
   margin: 8px 0;
@@ -48,7 +36,7 @@ input[type=submit] {
 }
 
 input[type=submit]:hover {
-  background-color: #db6b2a;
+  background-color: #45a049;
 }
 
 div {
@@ -57,6 +45,14 @@ div {
   padding: 20px;
 }
 
+#premium {
+  display: flex;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 8rem;
+  background-color: red;
+}
 
 .popup-container {
   position: fixed;
@@ -95,6 +91,6 @@ div {
 
 #logout {
   position: absolute;
-  top: 30px;
-  right: 8rem;
+  top: 5px;
+  right: 5rem;
 }
