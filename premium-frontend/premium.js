@@ -58,7 +58,21 @@ getExpense.addEventListener('click', () => {
     limit = 'all';
     displayExpenses(limit)
 })
-
+const dailyBtn = document.getElementById('daily')
+dailyBtn.addEventListener('click', () => {
+    limit = 'daily'
+    displayExpenses(limit)
+})
+const weeklyBtn = document.getElementById('weekly')
+weeklyBtn.addEventListener('click', () => {
+    limit = 'weekly'
+    displayExpenses(limit)
+})
+const monthlyBtn = document.getElementById('monthly')
+monthlyBtn.addEventListener('click', () => {
+    limit = 'monthly';
+    displayExpenses(limit)
+})
 
 //displaying expense
 function displayExpenses(limit, page = 1, rows = localStorage.getItem('rows')) {
@@ -132,7 +146,91 @@ displayContainer.addEventListener('click', (e) => {
     }
 })
 
+//download Expense
+const downloadBtn = document.getElementById('download')
+downloadBtn.addEventListener('click', () => {
+    axios.get('http://localhost:3000/download', { headers: { 'authorization': `Bearer ${localStorage.getItem('token')}` } })
+        .then(response => {
+            var link = document.createElement('link');
+            link.href = response.data.fileUrl;
+            link.download = 'MyExpenses.csv'
+            link.click();
+        })
+        .catch((err) => {
+            console.log(err)
+            document.innerHTML += `<div>${err}</div>`
+        })
+})
+
+document.addEventListener('DOMContentLoaded', () => {
+    const previousDownloadDiv = document.getElementById('previousDownload')
+    axios.get('http://localhost:3000/previousdownloads', { headers: { 'authorization': `Bearer ${localStorage.getItem('token')}` } })
+        .then(response => {
+            previousDownloadDiv.innerHTML = '';
+            let heading = document.createElement('h2');
+            heading.innerHTML = 'Previous Downloads'
+            previousDownloadDiv.appendChild(heading)
+            const ul = document.createElement('ul')
+            response.data.links.reverse().forEach(link => {
+                const li = document.createElement('li')
+                li.innerHTML = `<a href="${link.link}">${link.fileName}</a>`
+                ul.appendChild(li)
+            })
+            previousDownloadDiv.appendChild(ul)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+})
 
 
+//pagination
+function pagination(response) {
+    const container = document.getElementById('pagination')
+    const rows = parseInt(localStorage.getItem('rows'));
+    container.innerHTML = `
+    <form> 
+    <label for="rows">Rows Per Page:</label>
+    <select name="rowsPerPage" id="rows" style="width:60px;padding:0px" value="50">
+          <option disabled selected value> ${localStorage.getItem('rows')}</option>
+          <option value=5>5</option>
+          <option value=10>10</option>
+          <option value=25>25</option>
+          <option value=50>50</option>
+   </select>
+   <button type="click" id="rowsPerPage">Submit</button>
+   </form>
+   <br>
+    <span>
+         <button id="firstPage" onclick="displayExpenses(${limit},${1},${rows})">1</button>
+         <button id="previousPage" onclick="displayExpenses(${limit},${response.data.previousPage},${rows})">${response.data.previousPage}</button>
+         <button id="currentPage" onclick="displayExpenses(${limit},${response.data.currentPage},${rows})" class="active">${response.data.currentPage}</button>
+         <button id="nextPage" onclick="displayExpenses(${limit},${response.data.nextPage},${rows})">${response.data.nextPage}</button>
+         <button id="lastPage" onclick="displayExpenses(${limit},${response.data.lastPage},${rows})">${response.data.lastPage}</button>
+    </span>
+    `
+    const firstPage = document.getElementById(`firstPage`);
+    const currentPage = document.getElementById(`currentPage`);
+    const previousPage = document.getElementById(`previousPage`);
+    const nextPage = document.getElementById(`nextPage`);
+    const lastPage = document.getElementById(`lastPage`);
+    if (parseInt(currentPage.innerText) == 1)
+        firstPage.style.display = 'none'
+    if (parseInt(previousPage.innerText) < 1 || parseInt(previousPage.innerText) == firstPage.innerText)
+        previousPage.style.display = 'none'
+    if (parseInt(nextPage.innerText) > parseInt(lastPage.innerText))
+        nextPage.style.display = 'none'
+    if (parseInt(currentPage.innerText) == parseInt(lastPage.innerText) || parseInt(nextPage.innerText) == parseInt(lastPage.innerText))
+        lastPage.style.display = 'none'
 
+    //when rows per page clicked
+    //dynamic pagination
+    const rowsPerPageBtn = document.getElementById('rowsPerPage')
+    rowsPerPageBtn.addEventListener('click', (e) => {
+        e.preventDefault()
+        localStorage.setItem('rows', document.getElementById('rows').value)
+        displayExpenses()
 
+    })
+
+}

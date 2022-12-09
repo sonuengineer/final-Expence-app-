@@ -5,8 +5,8 @@ const Order = require('../models/order')
 
 exports.premiumOrderGeneration = (req, res, next) => {
     var instance = new Razorpay({
-        key_id:'rzp_test_ps6lSD7tRRGeh5',
-        key_secret:'43ZgMMjSd2tmkoIT5rs5J3BB'
+        KEY_ID:'rzp_test_6hzrfvBHHLlccK',
+        KEY_SECRET:'nuoZyhweodZAr8I7qXAof8jH'
     })
     var options = {
         amount: req.body.amount,  // amount in the smallest currency unit
