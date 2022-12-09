@@ -14,7 +14,7 @@ const User = require('./models/user')
 const Expense = require('./models/expense')
 const Order = require('./models/order')
 const Password = require('./models/password')
-
+const Download = require('./models/download')
 
 
 const cors = require('cors')
@@ -43,6 +43,8 @@ User.hasOne(Order);
 Order.belongsTo(User);
 User.hasMany(Password);
 Password.belongsTo(User);
+User.hasMany(Download)
+Download.belongsTo(User)
 
 
 app.use('/user', authRoutes);
